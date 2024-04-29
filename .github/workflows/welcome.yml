@@ -1,0 +1,19 @@
+name: Post welcome comment
+on: 
+  pull_request:
+    types: [opened]
+permissions:
+  pull-requests: write
+jobs:
+  build:
+    name: Post welcome comment
+    runs-on: ubuntu-latest
+    ###
+    # Esto vale si aprovecho para hacer comentarios?? 
+    ###
+    steps:
+      - run: gh pr comment $PR_URL --body "Welcome to the repository!"
+        ### gh for githuv, pr for pullrequest, and I set the var for PR_URL right under this
+        env: #Set the environment variables
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} ## I need this to access the repo
+          PR_URL: ${{ github.event.pull_request.html.url }}
